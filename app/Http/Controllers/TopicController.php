@@ -23,7 +23,8 @@ class TopicController extends Controller
   public function subscribe($topic, Request $request)
   {
         TopicModel::create([
-          'topic' => $topic
+          'topic' => $topic,
+          'url' => $request->url,
         ]);
 
         $data = array(

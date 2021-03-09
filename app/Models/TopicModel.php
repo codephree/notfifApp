@@ -10,7 +10,8 @@ class TopicModel extends Model
     use HasFactory;
 
     protected $fillable = [
-        'topic'
+        'topic',
+        'url'
     ];
 
     protected static function boot()
