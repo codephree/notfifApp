@@ -14,7 +14,7 @@ Create database.sqlite in database folder and run migration from the terminal
 ```bash
 php artisan migrate
 ```
-Then run serve to https://localhost:8000
+Then run below to serve  https://localhost:8000
 
 ```bash
 php artisan serve
