@@ -22,8 +22,9 @@ php artisan serve
 
 
 ## Usage
-Use below URL to create subscriber for a topic
-```
+Verify the deployment by navigating to your server address in
+your preferred client.
+```sh
   POST 'http://localhost:8000/subscribe/{topic1}'
   // body
  {
@@ -32,8 +33,9 @@ Use below URL to create subscriber for a topic
   }
 ```
 
-Use below URL to publish message for a topic
-```
+Verify the deployment by navigating to your server address in
+your preferred client.
+```sh
   POST 'http://localhost:8000/subscribe/{topic1}'
   // body
  {
