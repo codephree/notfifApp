@@ -19,8 +19,8 @@ class TopicController extends Controller
            $list = array();
            foreach ($top as $key)
            {
-                 $subs = $this->callSubscriberEndpoint($key['url'], $request->all());
-                 if ($subs = 1)
+                // $subs = $this->callSubscriberEndpoint($key['url'], $request->all());
+                 if ($this->callSubscriberEndpoint($key['url'], $request->all()))
                 {
                    $count++;
                    $list['endpoint_'.$count] = $key['url'];
@@ -29,8 +29,8 @@ class TopicController extends Controller
            $data = [
                  'topic' => $topic,
                   'data' => [
-                      'nos_endpoint' => $count,
-                      'endpoints' => $list,
+                      'endpoint_processed_no' => $count,
+                      'list_of_process_endpoints' => $list,
                       'user_input' => $request->all()
                   ]
              ];
@@ -43,7 +43,7 @@ class TopicController extends Controller
         $data = [];  //Return data to the client
         $validator = Validator::make($request->all(), ['url' => 'required|unique:topic_models|url']);
         /*
-        *  If validation failed 
+        *  If validation failed
         */
         if($validator->fails())
         {
@@ -69,15 +69,28 @@ class TopicController extends Controller
   */
   private function callSubscriberEndpoint($url, $data)
   {
-        // $client = new Client(); //GuzzleHttp\Client
-        // $result = $client->post($url, [
-        //   'form_params' => $data
-        // ]);
-        // return $result;
+        $client = new Client(); //GuzzleHttp\Client
+        try {
+            $result = $client->post($url, [
+              'form_params' => $data
+            ]);
+            $response =  json_decode($result->getBody(), true);
+            if($response['status'] != 0)
+            {
+              return false;
+            }
 
-        return true;
+            return true;
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+
+            return false;
+
+        }
+
 
   }
+
+
 
 
 }
